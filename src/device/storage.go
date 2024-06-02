@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
 
-var svc *dynamodb.Client
+var svc *dynamodb.Client // DynamoDB client
 
 func init() {
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-east-1"))
