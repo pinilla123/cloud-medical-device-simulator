@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  This SAM template defines the resources required for deploying a cloud-based (AWS) 
+  medical device simulator application. The application is written in Golang and 
+  uses AWS Lambda to handle HTTP requests, API Gateway to expose RESTful endpoints, 
+  and DynamoDB for storing simulated medical device data.
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  MedicalDeviceFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: main
+      Runtime: provided.al2023
+      CodeUri: ./bin/function.zip
+      Environment:
+        Variables:
+          TABLE_NAME: 'MedicalDeviceData'
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: 'MedicalDeviceData'
+      Events:
+        GetData:
+          Type: Api
+          Properties:
+            Path: /data
+            Method: get
